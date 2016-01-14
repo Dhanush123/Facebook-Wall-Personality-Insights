@@ -49,11 +49,11 @@
 
     window.fbAsyncInit = function() {
     FB.init({
-      appId      : '1659268791013008',
+      appId      : '1659262794346941',
       cookie     : true,  // enable cookies to allow the server to access
                           // the session
       xfbml      : true,  // parse social plugins on this page
-      version    : 'v2.2' // use version 2.2
+      version    : 'v2.5' // use version 2.2
     });
 
     // Now that we've initialized the JavaScript SDK, we call
@@ -98,16 +98,15 @@
         'GET',
         {"fields":"message"},
         function(response) {
-          var x = 0;
+          var post =" ";
           for(var k in response.data) {
-            var post = response.data[k].message;
-            if(post=="undefined" || post==null || post==undefined){
-              post = "";
+            post = response.data[k].message;
+            if(post === undefined || post === null){
+              post = " ";
             }
-              posts+="\n "+post;
-            x++;
+            posts+="\n "+post;
           }
-          document.getElementById('inputText').value = posts;
+          document.getElementById('inputText').value = posts.replace("undefined", "");
           console.log("got posts: "+posts);
             // Insert your code here
         }
@@ -142,12 +141,6 @@
       -->  <fb:login-button scope="public_profile,email,user_posts" onlogin="checkLoginState();" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="false">
         </fb:login-button>
       <div class="tab-panels" role="tabpanel">
-        <span class="input--reset icon-hyperlink">
-          <span class="icon icon-reset"></span>
-          <button class="base--a icon-hyperlink--button icon-hyperlink--button_BLANK input--reset-button" href="" type="reset">
-            Reset
-          </button>
-        </span>
          <!-- body of text title here-->
         <div class="tab-panels--tab-content">
           <div id="text-panel" class="tab-panels--tab-pane active" role="tab-panel">
