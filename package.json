@@ -4,26 +4,9 @@
   "description": "A sample NodeJS app that use the Personality Insights service",
   "repository": {
     "type": "git",
-    "url": "https://github.com/watson-developer-cloud/personality-insights-nodejs.git"
+    "url": "https://github.com/Dhanush123/Facebook-Wall-Personality-Insights.git"
   },
-  "author": "IBM Corp.",
-  "contributors": [{
-    "name": "James Zhang",
-    "email": "jzhang300@us.ibm.com"
-  }, {
-    "name": "Eva Xiaohui Luo",
-    "email": "evaluo_xhl@us.ibm.com"
-  }, {
-    "name": "German Attanasio Ruiz",
-    "email": "germanatt@us.ibm.com"
-  }, {
-    "name": "Ary Pablo Batista",
-    "email": "batarypa@ar.ibm.com"
-  }],
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/watson-developer-cloud/personality-insights-nodejs/issues"
-  },
+  "author": "Dhanush Patel",
   "scripts": {
     "start": "node app.js"
   },

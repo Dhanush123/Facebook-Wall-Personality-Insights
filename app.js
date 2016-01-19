@@ -12,6 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * file modified by Dhanush
  */
 
 'use strict';
@@ -37,17 +39,6 @@ var personalityInsights = watson.personality_insights({
 // Creates a promise-returning function from a Node.js-style function
 var getProfile = Q.denodeify(personalityInsights.profile.bind(personalityInsights));
 
-function tweetToContentItem(tweet) {
-  return {
-    id: tweet.id_str,
-    userid: tweet.user.id_str,
-    sourceid: 'twitter',
-    language: 'en',
-    contenttype: 'text/plain',
-    content: tweet.text.replace('[^(\\x20-\\x7F)]*',''),
-    created: Date.parse(tweet.created_at)
-  };
-}
 
 app.get('/', function(req, res) {
   res.render('index', { ct: req._csrfToken });
@@ -60,21 +51,6 @@ app.post('/api/profile/text', function(req, res, next) {
       })
     .catch(next)
     .done();
-});
-
-app.post('/api/profile/twitter', function(req, res, next) {
-  if (!isString(req.body.userId))
-    next({code: 400, error: 'Missing required parameters: userId'});
-
-  var tweets = require('./public/data/twitter/'+ req.body.userId +'_tweets.json');
-
-  getProfile(extend(req.body, { contentItems: tweets.map(tweetToContentItem) }))
-    .then(function(response){
-        res.json(response[0]);
-      })
-    .catch(next)
-    .done();
-
 });
 
 // error-handler settings

@@ -12,6 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * file modified by Dhanush
  */
 /* global $:false,TextSummary, Profile,_, $Q*/
 'use strict';
@@ -54,21 +56,12 @@ function toDict(d) { return new Dictionary(d); }
 
 $(document).ready(function () {
 
-
-
-  var
-    SAMPLE_TEXTS = [
-        'sample1',
-        'sample2',
-        'sample3',
-        'ar'
-      ],
-    globalState = {
-        selectedSample: SAMPLE_TEXTS[0],
+  var globalState = {
+        selectedSample: undefined,
         languageSelected: undefined
-      },
-    textCache = {},
-    Resources = {
+      }
+
+  var  Resources = {
         _autoload : [ { name: 'scenarios', loader: removeHidden }, { name: 'names', loader: toDict } ]
       };
 
@@ -112,26 +105,6 @@ $(document).ready(function () {
       globalState.selectedLanguage = $(this).attr('value');
     });
 
-    $('input[name="text-sample"]').click(function() {
-      var
-        textFile = $(this).attr('data-file'),
-        orientation = $(this).attr('data-orientation');
-      globalState.selectedSample = textFile;
-
-      if (orientation === 'right-to-left') {
-        $inputTextArea.removeClass('left-to-right');
-        $inputTextArea.addClass('right-to-left');
-      } else {
-        $inputTextArea.removeClass('right-to-left');
-        $inputTextArea.addClass('left-to-right');
-      }
-
-      $('#languageChooser').hide();
-
-      loadSampleText(textFile);
-      updateWordCount();
-    });
-
     $(window).resize(function () {
       if ($(window).width() < 800) {
         $('.smartphone-hidden').hide();
@@ -158,11 +131,6 @@ $(document).ready(function () {
       }
     });
 
-    $('input[name="twitter"]').click(function() {
-      var twitterId = $(this).val();
-      globalState.selectedTwitterUser = twitterId;
-    });
-
     $inputForm1.submit(function(e) {
       e.preventDefault();
       e.stopPropagation();
@@ -170,7 +138,6 @@ $(document).ready(function () {
       resetOutputs();
       $loading.show();
       scrollTo($loading);
-      getProfileForTwitterUser(globalState.selectedTwitterUser, 'en');
     });
 
     $inputForm2.submit(function(e) {
@@ -205,27 +172,11 @@ $(document).ready(function () {
     $(this).closest('.percent-bar-and-score').toggleClass('toggled');
   });
 
-  $resetButton.click(function() {
-    $('input[name="twitter"]:first').trigger('click');
-    $('input[name="text-sample"]:first').trigger('click');
-    $('.tab-panels--tab:first').trigger('click');
-    resetOutputs();
-  });
-
   // toggleNeedsTraits
   $needsToggle.click(function() {
     $needsMoreTraits.toggle();
     $needsToggle.text($needsToggle.text() == 'See more' ? 'See less' : 'See more');
   });
-
-  $outputJSONButton.click(function() {
-    $outputJSON.toggle();
-    scrollTo($outputJSON);
-  });
-
-  function getProfileForTwitterUser(userId, language) {
-    getProfile(userId, language, 'twitter');
-  }
 
   function getProfileForText(text, language) {
     getProfile(text, language, 'text');
@@ -297,8 +248,6 @@ $(document).ready(function () {
   }
 
   function getProfile(data, language, sourceType) {
-    // Source Types: (text|twitter)
-    sourceType = sourceType || 'text';
 
     var postData = {
         language: language,
@@ -306,11 +255,7 @@ $(document).ready(function () {
       },
       url = '/api/profile/' + sourceType;
 
-    if (sourceType === 'twitter')
-      postData.userId = data;
-    else
       postData.text = data;
-
 
     $.ajax({
       headers:{
@@ -497,8 +442,6 @@ $(document).ready(function () {
     }));
 
     loadBehaviors(data);
-
-    updateJSON(rawData);
   }
 
   function loadBehaviors(profile) {
@@ -595,39 +538,6 @@ $(document).ready(function () {
     return obj1.score - obj2.score;
   }
 
-  function preloadSampleTexts(callback) {
-    var shared = { done : 0 };
-    SAMPLE_TEXTS.forEach(function(name) {
-      $Q.get('data/text/' + name + '.txt')
-        .then(function (text) {
-          shared.done = shared.done + 1;
-          textCache[name] = text;
-
-          if (shared.done == SAMPLE_TEXTS.length && callback) {
-            callback();
-          }
-        })
-        .done();
-    });
-  }
-
-  function loadSampleText(name) {
-    if (textCache[name]) {
-      setTextSample(textCache[name], true);
-      updateWordCount();
-    } else {
-      $Q.get('data/text/' + name + '.txt')
-        .then(function (text) {
-          setTextSample(text, true);
-          textCache[name] = text;
-        })
-        .then(function() {
-          updateWordCount();
-        })
-        .done();
-    }
-  }
-
   function showHiddenLanguages() {
     var enableLang = {
       'ar' : function () {
@@ -665,13 +575,6 @@ $(document).ready(function () {
   }
 
   function initialize() {
-    $('input[name="twitter"]:first').attr('checked', true);
-    $('input[name="text-sample"]:first').attr('checked', true);
-    globalState.selectedTwitterUser = $('input[name="twitter"]:first').val();
-    showHiddenLanguages();
-    preloadSampleTexts(function () {
-      loadSampleText(globalState.selectedSample);
-    });
     loadResources();
     registerHandlers();
     $inputTextArea.addClass('orientation', 'left-to-right');
@@ -683,11 +586,6 @@ $(document).ready(function () {
 
   function updateWordCount() {
     $inputWordCount.text(countWords($inputTextArea.val()));
-  }
-
-  function updateJSON(results) {
-    $outputJSONCode.html(JSON.stringify(results, null, 2));
-    $('.code--json').each(function (i,b) { hljs.highlightBlock(b); });
   }
 
   initialize();
