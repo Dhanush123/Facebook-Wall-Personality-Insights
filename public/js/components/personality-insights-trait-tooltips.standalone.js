@@ -14,6 +14,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Modified by Dhanush
  */
 var Dictionary,
     PITooltips,
@@ -78,7 +80,7 @@ module.exports = {
     'Conscientiousness': 'Higher: More self-disciplined, dutiful, or aiming for achievement against measures or outside expectations.\nLower: More likely to prefer the spontaneous over the planned.',
     'Introversion/Extraversion': 'Higher: More energetic and pronounced engagement with the external world. Likes high group visibility, talking, and asserting themselves.\nLower: Needs less stimulation and are more independent of their social world. It does not mean they are shy, un-friendly, or antisocial.',
     'Agreeableness': 'Higher: Value getting along with others. They have a more optimistic view of human nature.\nLower: Value self interests over others. They are more skeptical of others\' motives.',
-    'Emotional range': '**This demo cannot diagnose a mental illness.** Higher: More likely to have negative emotions or get upset. It could mean they are going through a tough time.\nLower: More calm and less likely to get upset. It does not mean they are positive, or happy people.',
+    'Emotional range': 'Higher: More likely to have negative emotions or get upset. It could mean they are going through a tough time.\nLower: More calm and less likely to get upset. It does not mean they are positive, or happy people.',
     'Adventurousness': 'Eagerness to trying new activities and experiencing new things.',
     'Artistic interests': 'Appreciation for art and beauty, both man-made and in nature.',
     'Emotionality': 'Emotional availability; awareness of own feelings.',
@@ -105,7 +107,7 @@ module.exports = {
     'Trust': 'Level of belief in the sincerity and good intentions of others.',
     'Fiery': 'Tendency to experience–but not necessarily express–anger or frustration.',
     'Prone to worry': 'Tendency to dwell on difficulty or troubles; easily experience unease or concern.',
-    'Melancholy': 'Normal tendency to experience feelings of guilt, sadness, hopelessness, or loneliness. **This demo cannot diagnose a mental illness.**',
+    'Melancholy': 'Normal tendency to experience feelings of guilt, sadness, hopelessness, or loneliness.',
     'Impulsiveness': 'Tendency to act on cravings and urges rather over resisting them or delaying gratification.',
     'Self-consciousness': 'Concern with rejection, embarrassment; shyness.',
     'Sensitivity to stress': 'Difficulty in coping with stress or pressure in difficult situations.'
