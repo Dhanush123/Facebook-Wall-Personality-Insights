@@ -13,6 +13,9 @@ Instructions on how to navigate the live demo are written on that website itself
 
 You can view a voiceover of the live demo in action at https://youtu.be/Oq3497MMdd0 or through the demovideo.mp4 file in the root directory of this repository. 
 
-
+Other acknowledgements: 
+ - usage of these icons
+    http://www.flaticon.com/free-icon/searching-magnifying-glass_61088#term=search&page=1&position=7
+    http://www.flaticon.com/free-icon/profile-user_64572#term=user-profile&page=1&position=11
 
 
