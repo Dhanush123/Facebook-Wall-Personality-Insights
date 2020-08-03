@@ -1,1 +1,2 @@
-ComGen commented - part 0/1
+COMGEN UPDATE STUB
+Q29tR2VuIGNvbW1lbnRlZCAtIHBhcnQgMC8x
